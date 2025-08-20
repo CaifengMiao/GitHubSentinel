@@ -13,6 +13,8 @@ def interactive_shell(scheduler: TaskScheduler):
     print("  add <owner> <repo>    - 添加监控仓库")
     print("  remove <owner> <repo> - 移除监控仓库")
     print("  check <owner> <repo>  - 立即检查仓库更新")
+    print("  daily-report <owner> <repo> - 生成每日报告")
+    print("  daily-report-all      - 为所有监控仓库生成每日报告")
     print("  list                 - 列出所有监控仓库")
     print("  quit                 - 退出程序")
     
@@ -71,11 +73,41 @@ def interactive_shell(scheduler: TaskScheduler):
                     scheduler.check_repository_updates(owner, repo)
                 else:
                     print(f"仓库 {owner}/{repo} 不在配置文件中，请检查仓库名称是否正确")
+            elif command[0] == "daily-report" and len(command) == 3:
+                owner = command[1]
+                repo = command[2]
+                # 验证仓库名称是否在配置文件中
+                config_path = os.path.join(os.path.dirname(__file__), 'config', 'repositories.json')
+                is_valid_repo = False
+                if os.path.exists(config_path):
+                    with open(config_path, 'r', encoding='utf-8') as f:
+                        repositories = json.load(f)
+                    for repo_info in repositories:
+                        if repo_info['owner'] == owner and repo_info['repo'] == repo:
+                            is_valid_repo = True
+                            break
+                
+                if is_valid_repo:
+                    print(f"生成每日报告: {owner}/{repo}")
+                    scheduler.generate_daily_progress_report(owner, repo)
+                else:
+                    print(f"仓库 {owner}/{repo} 不在配置文件中，请检查仓库名称是否正确")
             elif command[0] == "list":
                 repositories = scheduler.list_repositories()
                 print("当前监控的仓库:")
                 for owner, repo in repositories:
                     print(f"  {owner}/{repo}")
+            elif command[0] == "daily-report-all":
+                print("为所有监控仓库生成每日报告...")
+                repositories = scheduler.list_repositories()
+                for owner, repo in repositories:
+                    try:
+                        print(f"生成 {owner}/{repo} 的每日报告...")
+                        scheduler.generate_daily_progress_report(owner, repo)
+                        print(f"{owner}/{repo} 的每日报告生成完成")
+                    except Exception as e:
+                        print(f"生成 {owner}/{repo} 的每日报告时出错: {e}")
+                print("所有仓库的每日报告生成完成")
             else:
                 print("未知命令或参数错误")
         except KeyboardInterrupt:
