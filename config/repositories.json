@@ -1,0 +1,14 @@
+[
+  {
+    "owner": "microsoft",
+    "repo": "vscode"
+  },
+  {
+    "owner": "facebook",
+    "repo": "react"
+  },
+  {
+    "owner": "langchain-ai",
+    "repo": "langchain"
+  }
+]
