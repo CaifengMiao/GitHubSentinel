@@ -3,6 +3,7 @@ import time
 from github.client import GitHubClient
 from notifier.email_notifier import EmailNotifier
 from reporter.report_generator import ReportGenerator
+from reporter.daily_report_generator import DailyReportGenerator
 from storage.database import Database
 from config.settings import settings
 from typing import List
@@ -13,9 +14,10 @@ class TaskScheduler:
         self.github_client = GitHubClient()
         self.notifier = EmailNotifier()
         self.report_generator = ReportGenerator()
+        self.daily_report_generator = DailyReportGenerator()
         self.database = Database()
         self.scheduled_jobs = []
-        
+    
     def check_repository_updates(self, owner: str, repo: str):
         """检查仓库更新并生成报告"""
         try:
@@ -42,16 +44,38 @@ class TaskScheduler:
         except Exception as e:
             print(f"检查仓库 {owner}/{repo} 更新时出错: {e}")
     
+    def generate_daily_progress_report(self, owner: str, repo: str):
+        """生成每日进展报告"""
+        try:
+            print(f"开始生成每日进展报告: {owner}/{repo}")
+            
+            # 导出每日进展到 Markdown 文件
+            filepath = self.github_client.export_daily_progress(owner, repo)
+            print(f"每日进展文件已导出到: {filepath}")
+            
+            # 生成每日报告
+            report_filepath = self.daily_report_generator.generate_daily_report(owner, repo)
+            print(f"每日报告已生成到: {report_filepath}")
+            
+        except Exception as e:
+            print(f"生成每日进展报告时出错: {e}")
+    
     def add_repository(self, owner: str, repo: str):
         """添加仓库到调度器"""
         # 根据配置设置调度间隔
         if settings.SCHEDULE_INTERVAL == "daily":
             job = schedule.every().day.do(self.check_repository_updates, owner, repo)
+            # 添加每日报告生成任务
+            schedule.every().day.at("23:59").do(self.generate_daily_progress_report, owner, repo)
         elif settings.SCHEDULE_INTERVAL == "weekly":
             job = schedule.every().week.do(self.check_repository_updates, owner, repo)
+            # 添加每周报告生成任务
+            schedule.every().week.at("23:59").do(self.generate_daily_progress_report, owner, repo)
         else:
             # 默认每天执行
             job = schedule.every().day.do(self.check_repository_updates, owner, repo)
+            # 添加每日报告生成任务
+            schedule.every().day.at("23:59").do(self.generate_daily_progress_report, owner, repo)
         
         self.scheduled_jobs.append((owner, repo, job))
         print(f"已添加仓库到监控列表: {owner}/{repo}")

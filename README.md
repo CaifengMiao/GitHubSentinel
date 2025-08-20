@@ -8,6 +8,9 @@
 - 通知系统
 - 报告生成
 - 交互式命令行界面
+- 每日进展模块
+- LLM 集成
+- 智能报告生成
 
 ## 技术架构
 
@@ -46,6 +49,8 @@ GithubSentinel/
 - **notifier**: 通知模块，负责发送仓库更新通知
 - **reporter**: 报告生成模块，负责生成仓库更新汇总报告
 - **storage**: 数据存储模块，负责保存和查询仓库事件数据
+- **llm**: 大语言模型模块，负责调用 OpenAI 和 DeepSeek API
+- **daily_progress**: 每日进展模块，负责导出仓库的每日进展到 Markdown 文件
 
 ## 安装与运行
 
@@ -78,6 +83,7 @@ GithubSentinel/
 - `add <owner> <repo>`: 动态添加监控仓库
 - `remove <owner> <repo>`: 动态移除监控仓库
 - `check <owner> <repo>`: 立即检查指定仓库的更新
+- `daily-report <owner> <repo>`: 生成指定仓库的每日报告
 - `list`: 列出当前所有监控的仓库
 - `quit`: 退出程序
 
@@ -95,6 +101,7 @@ GithubSentinel/
 - `EMAIL_PASSWORD`: 邮件密码
 - `EMAIL_RECIPIENTS`: 邮件收件人列表 (用逗号分隔)
 - `DATABASE_PATH`: 数据库文件路径
+- `DEEPSEEK_API_KEY`: DeepSeek API 密钥
 
 ## 使用说明
 

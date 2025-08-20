@@ -20,5 +20,8 @@ class Settings:
     
     # 数据库配置
     DATABASE_PATH = os.getenv("DATABASE_PATH", "github_sentinel.db")
+    
+    # LLM 配置
+    DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
 
 settings = Settings()
