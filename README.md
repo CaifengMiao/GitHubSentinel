@@ -82,11 +82,12 @@ GithubSentinel/
    # 默认在 http://0.0.0.0:7860 提供服务
    ```
    - UI 输入：订阅下拉（来自 `config/repositories.json`）、报告周期滑块（天数）、模式单选（生成AI报告 / 查看历史报告）、历史报告下拉（按仓库与模式动态更新）
+   - 模型选择：新增一级下拉选择 LLM 提供方（`DeepSeek` / `Ollama`）。当选择 `Ollama` 时在右侧显示二级模型下拉，选项直接来自本地 Ollama 模型官方标签（通过 `GET http://localhost:11434/api/tags` 动态加载，如 `deepseek-r1:8b`、`deepseek-r1:14b`）。
    - 提交按钮文案：生成AI报告模式显示“生成报告”，查看历史报告模式显示“查看报告”
    - 分支策略：自动使用仓库 `default_branch`，分支选择 UI 已移除
    - 右侧报告区：固定高度（约 77vh），内容在卡片内滚动；底部“报告导出”区域始终可见
-   - AI 配置：在 `.env` 设置 `DEEPSEEK_API_KEY` 以启用 AI 生成总结报告
-   - 预览说明：IDE 内置预览可能报网络错误（不影响功能），建议用系统浏览器访问
+   - AI 配置：支持 `DeepSeek` 远程 API 与 `Ollama` 本地推理。设置 `DEEPSEEK_API_KEY` 使用 DeepSeek；本地安装并运行 Ollama（默认 `http://127.0.0.1:11434`，可用 `OLLAMA_BASE_URL` 覆盖）。
+   - 预览说明：IDE 内置预览可能报网络错误或 `NotOpenSSLWarning`（不影响功能），建议用系统浏览器访问
 
 ## 交互式命令行界面
 
@@ -114,6 +115,7 @@ GithubSentinel/
 - `EMAIL_RECIPIENTS`: 邮件收件人列表 (用逗号分隔)
 - `DATABASE_PATH`: 数据库文件路径
 - `DEEPSEEK_API_KEY`: DeepSeek API 密钥
+- `OLLAMA_BASE_URL`: Ollama 服务地址（可选，默认 `http://127.0.0.1:11434`）
 
 ## 使用说明
 
@@ -132,6 +134,9 @@ GithubSentinel/
 - 提交按钮：根据模式动态切换文案（生成报告 / 查看报告）。
 - 分支策略：自动使用仓库默认分支 `default_branch`；相关分支选择 UI 已移除以简化操作。
 - 运行提示：IDE 内置预览可能显示 `net::ERR_ABORTED` 等网络错误，但不影响页面渲染；建议在系统浏览器中访问 `http://0.0.0.0:7860/`。
+- 模型选择与联动：新增 LLM 提供方下拉（`DeepSeek` / `Ollama`），仅当选择 `Ollama` 时显示二级模型下拉；本地模型列表通过 `http://localhost:11434/api/tags` 动态获取并展示官方标签（如 `deepseek-r1:8b`、`deepseek-r1:14b`）。
+- 模型默认与后端：优先默认 `deepseek-r1:14b`（若存在），生成报告时直接传递所选 Ollama 标签，不再做别名映射；非 Ollama 情况使用默认配置。
+- 错误处理与提示：补充提示词模板缺失时的友好提示；IDE 预览的 OpenSSL/LibreSSL 警告不影响功能。
 
 ## 贡献指南
 

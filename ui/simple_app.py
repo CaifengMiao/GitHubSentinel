@@ -62,7 +62,31 @@ github_client = GitHubClient()
 llm_client = None
 
 
-def export_progress_by_date_range(repo_full: str, days: int, mode: str, history_hint: Optional[str] = ""):
+def _map_ollama_model(label: Optional[str]) -> Optional[str]:
+    # 使用官方模型名，直接返回，不再做别名映射
+    return label
+
+# 动态获取本地 Ollama 已安装模型标签
+
+def list_ollama_models() -> List[str]:
+    try:
+        import requests
+        resp = requests.get("http://localhost:11434/api/tags", timeout=2)
+        resp.raise_for_status()
+        data = resp.json()
+        models: List[str] = []
+        if isinstance(data, dict) and isinstance(data.get("models"), list):
+            for m in data["models"]:
+                name = m.get("name") or m.get("model") or ""
+                if name:
+                    models.append(name)
+        return models
+    except Exception:
+        # 回退：提供常见模型标签，避免界面空白
+        return ["deepseek-r1:8b", "deepseek-r1:14b"]
+
+
+def export_progress_by_date_range(repo_full: str, days: int, mode: str, history_hint: Optional[str] = "", provider_choice: str = "deepseek", ollama_model_choice: Optional[str] = None):
     """
     - mode == "生成AI报告": 导出最近 days 天进展，调用 AI 生成总结，保存并返回 (AI 报告, 大小+下载链接)
     - mode == "查看历史报告": 读取历史报告（按 hint 或最新），返回 (报告内容, 大小+下载链接)
@@ -95,8 +119,16 @@ def export_progress_by_date_range(repo_full: str, days: int, mode: str, history_
             return f"读取历史报告出错: {e}", ""
 
     # 生成 AI 报告模式
-    if not settings.DEEPSEEK_API_KEY:
-        return "未配置 DEEPSEEK_API_KEY，无法使用AI生成报告。请在 .env 中设置。", ""
+    chosen = (provider_choice or "deepseek").lower()
+    provider = "ollama" if chosen == "ollama" else "openai"
+    model_name = None
+    if provider == "ollama":
+        raw_choice = (ollama_model_choice or "deepseek-r1:8b")
+        model_name = raw_choice
+    else:
+        model_name = None
+    # 选择模型名：当使用 Ollama 时以 UI 选择为准，其他情况走默认
+    model_name = None  # 交由 LLMClient 使用默认配置
 
     try:
         # 1) 先导出最近 days 天的原始进展到文件
@@ -116,31 +148,43 @@ def export_progress_by_date_range(repo_full: str, days: int, mode: str, history_
 
         # 3) 构造 Prompt 并调用 LLM 生成总结报告
         global llm_client
-        if llm_client is None:
-            llm_client = LLMClient()
+        llm_client = LLMClient(provider=provider, model=model_name)
 
-        # 从配置载入总结报告提示词模板
+        # 从配置载入总结报告提示词模板（支持数组格式）
         import json
-        from config.settings import settings
         try:
-            with open(settings.PROMPTS_PATH, "r", encoding="utf-8") as pf:
-                templates = json.load(pf)
-            template = templates.get("summary_report_prompt")
+            base_dir = os.path.dirname(settings.PROMPTS_PATH)
+            pool_dir = os.path.join(base_dir, "prompt_pool")
+            provider_str = (provider_choice or "deepseek").lower()
+            base_name = "summary_report_ollama" if provider_str == "ollama" else "summary_report_deepseek"
+            txt_path = os.path.join(pool_dir, f"{base_name}.txt")
+            json_path = os.path.join(pool_dir, f"{base_name}.json")
+            if os.path.exists(txt_path):
+                with open(txt_path, "r", encoding="utf-8") as pf:
+                    template = pf.read()
+            elif os.path.exists(json_path):
+                with open(json_path, "r", encoding="utf-8") as pf:
+                    template_obj = json.load(pf)
+                template = "\n".join(template_obj) if isinstance(template_obj, list) else str(template_obj)
+            else:
+                raise FileNotFoundError("Prompt not found in prompt_pool")
         except Exception:
-            template = None
+            # 兼容回退：读取旧版 prompts.json 中的键
+            try:
+                with open(settings.PROMPTS_PATH, "r", encoding="utf-8") as pf:
+                    templates = json.load(pf)
+                chosen_key = (
+                    "summary_report_prompt_ollama"
+                    if (provider_choice or "deepseek").lower() == "ollama"
+                    else "summary_report_prompt_deepseek"
+                )
+                template = templates.get(chosen_key) or templates.get("summary_report_prompt")
+                if isinstance(template, list):
+                    template = "\n".join(template)
+            except Exception:
+                template = None
         if not template:
-            template = (
-                "你是一位专业的技术项目经理，负责为 {owner}/{repo} 项目编写进展总结报告（时间范围：{start_date} ~ {end_date}）。\n\n"
-                "原始进展数据（Issues、Pull Requests 与 Commits 最近更新）：\n{progress_md}\n\n"
-                "请生成结构化且清晰的总结报告，要求：\n"
-                "1. 报告标题：项目名称 - 项目进展总结（{start_date} ~ {end_date}）\n"
-                "2. 概述：用一段话总结这段时间的核心进展与趋势（重要里程碑、发布、重构、稳定性提升）。\n"
-                "3. Issues 更新：\n   - 分类列出新增与更新（简要描述与链接，如可用）。\n"
-                "4. Pull Requests 更新：\n   - 分类列出新增与更新（简要描述、作者与链接，如可用）。\n"
-                "5. Commits 更新（重点提升清晰度）：\n   - 概览：给出提交数量与类型分布（feat/fix/docs/refactor/test/chore/build/ci/perf/style/revert/other）。\n   - 重要变更：挑选 3-5 条关键提交，标明类型、scope、主题与影响面。\n   - 重大变更：若存在 `!` 或备注包含 `BREAKING CHANGE`，需单独列出并说明可能风险与迁移建议。\n   - 关联 PR：根据文本中的 `#123` 汇总列出（如可用）。\n   - 详细列表：使用 `[type(scope)!] sha subject — author (date)` 的格式逐条列出，并保留链接。\n"
-                "6. 总结：对项目健康度进行评价，指出需要关注的问题或风险，并给出下一步建议。\n\n"
-                "注意：\n- 使用正式、专业的语言；突出关键信息；避免冗长；不要添加原始数据中没有的内容。\n- 结构清晰，便于快速浏览；各小节用简明要点呈现。\n"
-            )
+            return "提示词模板缺失，请联系管理员。", ""
         prompt = template.format(owner=owner, repo=repo, start_date=start_date, end_date=end_date, progress_md=progress_md)
         ai_report_md = llm_client.generate_report_with_deepseek(prompt)
 
@@ -165,11 +209,12 @@ def export_progress_by_date_range(repo_full: str, days: int, mode: str, history_
         return f"生成报告失败: {e}", ""
 
 
-def _run_action(repo_full: str, days: int, mode: str, history_file: Optional[str]):
+def _run_action(repo_full: str, days: int, mode: str, history_file: Optional[str], provider_choice: str, ollama_model_choice: Optional[str]):
     """提交按钮处理：若选择了历史文件，则用其作为 hint 优先"""
     history_hint = history_file if (mode == "查看历史报告" and history_file) else ""
-    return export_progress_by_date_range(repo_full, days, mode, history_hint)
+    return export_progress_by_date_range(repo_full, days, mode, history_hint, provider_choice, ollama_model_choice)
 
+# 恢复历史报告下拉更新逻辑
 
 def _update_history_dropdown(repo_full: Optional[str], mode: str):
     choices = get_history_files(repo_full) if mode == "查看历史报告" else []
@@ -218,9 +263,10 @@ with gr.Blocks(title="GitHubSentinel", css="""
 .left-col, .right-col {
   /* 移除固定高度，使用自然高度避免按钮溢出到右侧 */
 }
-.left-col { display: flex; flex-direction: column; min-height: 0; overflow-y: auto; max-height: 80vh; }
+.left-col { display: flex; flex-direction: column; min-height: 0; height: 77vh; }
+.left-scroll { flex: 1 1 auto; overflow-y: auto; min-height: 0; }
 .right-col { display: grid; grid-template-rows: 1fr auto; height: 77vh; min-height: 0; }
-#left-actions { margin-top: auto; display: flex; justify-content: flex-start; gap: 8px; }
+#left-actions { margin-top: 8px; display: flex; justify-content: flex-start; gap: 8px; flex: none; }
 
 /* 价格卡片样式，用于右侧报告显示 */
 .pricing-card {
@@ -254,10 +300,17 @@ with gr.Blocks(title="GitHubSentinel", css="""
 """) as demo:
     with gr.Row(elem_id="main-row"):
         with gr.Column(scale=1, elem_classes=["left-col"]):
-            repo_dd = gr.Dropdown(choices=subs, value=(subs[0] if subs else None), label="订阅列表", info="已订阅GitHub项目")
-            days_slider = gr.Slider(value=1, minimum=1, maximum=90, step=1, label="报告周期", info="生成项目过去一段时间进展，单位：天（含常用选项：14/30/60/90）")
-            mode_radio = gr.Radio(choices=["生成AI报告", "查看历史报告"], value="生成AI报告", label="模式")
-            history_files_dd = gr.Dropdown(choices=[], value=None, label="历史报告列表", info="按仓库自动列出历史报告以便选择")
+            with gr.Column(elem_classes=["left-scroll"], scale=1):
+                 repo_dd = gr.Dropdown(choices=subs, value=(subs[0] if subs else None), label="订阅列表", info="已订阅GitHub项目")
+                 days_slider = gr.Slider(value=1, minimum=1, maximum=90, step=1, label="报告周期", info="生成项目过去一段时间进展，单位：天（1～90）")
+                 mode_radio = gr.Radio(choices=["生成AI报告", "查看历史报告"], value="生成AI报告", label="模式")
+                 history_files_dd = gr.Dropdown(choices=[], value=None, label="历史报告列表", info="按仓库自动列出历史报告以便选择")
+                 with gr.Row():
+                     provider_dd = gr.Dropdown(choices=["DeepSeek", "Ollama"], value="Ollama", label="模型选择", info="切换本地 Ollama 或 DeepSeek", scale=2)
+                     ollama_choices = list_ollama_models()
+                     ollama_default = "deepseek-r1:14b" if "deepseek-r1:14b" in ollama_choices else (ollama_choices[0] if ollama_choices else None)
+                     ollama_model_dd = gr.Dropdown(choices=ollama_choices, value=ollama_default, label="Ollama 模型", info="仅在选择 Ollama 时生效", scale=1)
+
             with gr.Row(elem_id="left-actions"):
                 submit_btn = gr.Button("生成报告", variant="primary")
                 clear_btn = gr.Button("清空")
@@ -273,9 +326,19 @@ with gr.Blocks(title="GitHubSentinel", css="""
     mode_radio.change(_update_history_dropdown, inputs=[repo_dd, mode_radio], outputs=[history_files_dd])
     mode_radio.change(_update_submit_label, inputs=[mode_radio], outputs=[submit_btn])
 
+    def _toggle_ollama_model_dd(provider_choice: str):
+        if provider_choice == "Ollama":
+            models = list_ollama_models()
+            default = "deepseek-r1:14b" if "deepseek-r1:14b" in models else (models[0] if models else None)
+            return gr.update(visible=True, choices=models, value=default)
+        else:
+            return gr.update(visible=False)
+
+    provider_dd.change(_toggle_ollama_model_dd, inputs=[provider_dd], outputs=[ollama_model_dd])
+
     submit_btn.click(
         _run_action,
-        inputs=[repo_dd, days_slider, mode_radio, history_files_dd],
+        inputs=[repo_dd, days_slider, mode_radio, history_files_dd, provider_dd, ollama_model_dd],
         outputs=[out_md, info_html],
     )
 

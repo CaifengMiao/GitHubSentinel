@@ -1,0 +1,240 @@
+订阅列表,报告周期,output 0,报告信息,flag,username,timestamp
+langchain-ai/langchain,2,"# langchain-ai/langchain - Progress (2025-10-24 ~ 2025-10-26)
+
+范围：最近 2 天（更新时间在 2025-10-24 后）
+
+## Issues（最近更新）
+
+- **#33674** refactor(core): Minor refactor for code readability
+  - State: open
+  - Created: 2025-10-26T02:01:42Z
+  - Updated: 2025-10-26T02:04:37Z
+
+- **#33673** refactor(core): Improve performance and code simplicity
+  - State: open
+  - Created: 2025-10-26T00:58:37Z
+  - Updated: 2025-10-26T01:01:23Z
+
+- **#33672** langchain-openai 无法读取到 qwen3 think 的过程 希望 支持 qwen3 像 支持 deepseek一样（initChatModel）
+  - State: open
+  - Created: 2025-10-26T00:01:51Z
+  - Updated: 2025-10-26T00:01:51Z
+
+- **#33671** refactor(anthropic): Code readability and simplicity
+  - State: open
+  - Created: 2025-10-25T23:51:47Z
+  - Updated: 2025-10-26T01:00:14Z
+
+- **#33670** feat(perplexity): Created Dedicated Output Parser to Support Reasoning Model Output for perplexity
+  - State: open
+  - Created: 2025-10-25T23:49:57Z
+  - Updated: 2025-10-26T00:04:22Z
+
+- **#33668** fix(openai): Respect 300k token limit for embeddings API requests
+  - State: open
+  - Created: 2025-10-25T12:38:27Z
+  - Updated: 2025-10-25T12:38:43Z
+
+- **#33666** feat: Add Serpex partner package for web search
+  - State: open
+  - Created: 2025-10-25T03:38:09Z
+  - Updated: 2025-10-25T05:33:48Z
+
+- **#33663** feat: support structured output retry middleware
+  - State: open
+  - Created: 2025-10-24T16:22:11Z
+  - Updated: 2025-10-24T17:57:10Z
+
+- **#33662** fix(openai): Improve vLLM API compatibility and error messages
+  - State: open
+  - Created: 2025-10-24T15:13:18Z
+  - Updated: 2025-10-24T15:20:30Z
+
+- **#33656** `summarizationMiddleware` leads message order unsupported by Gemini
+  - State: open
+  - Created: 2025-10-24T13:07:12Z
+  - Updated: 2025-10-24T13:17:32Z
+
+- **#33653** [LangChain v1] Built-in Middleware for Recursion limit fallback
+  - State: open
+  - Created: 2025-10-24T01:52:37Z
+  - Updated: 2025-10-25T09:08:59Z
+
+- **#33651** [LangChain v1] LLMToolSelectorMiddleware selects a tool that is not in the provided tool list. seems like the middleware is not receiving the correct tool list.
+  - State: open
+  - Created: 2025-10-24T00:39:14Z
+  - Updated: 2025-10-25T12:43:08Z
+
+- **#33640** chore(langchain_v1): Updated Signature for create_agent for system prompt
+  - State: open
+  - Created: 2025-10-22T19:50:38Z
+  - Updated: 2025-10-25T11:17:55Z
+
+- **#33630** create_agent() system_prompt not supporting array needed for anthropic api
+  - State: open
+  - Created: 2025-10-21T21:26:11Z
+  - Updated: 2025-10-24T14:49:06Z
+
+## Pull Requests（最近更新）
+
+- **#33674** refactor(core): Minor refactor for code readability
+  - State: open
+  - Created: 2025-10-26T02:01:42Z
+  - Updated: 2025-10-26T02:04:37Z
+
+- **#33673** refactor(core): Improve performance and code simplicity
+  - State: open
+  - Created: 2025-10-26T00:58:37Z
+  - Updated: 2025-10-26T01:01:23Z
+
+- **#33671** refactor(anthropic): Code readability and simplicity
+  - State: open
+  - Created: 2025-10-25T23:51:47Z
+  - Updated: 2025-10-26T01:00:14Z
+
+- **#33670** feat(perplexity): Created Dedicated Output Parser to Support Reasoning Model Output for perplexity
+  - State: open
+  - Created: 2025-10-25T23:49:57Z
+  - Updated: 2025-10-26T00:04:22Z
+
+- **#33668** fix(openai): Respect 300k token limit for embeddings API requests
+  - State: open
+  - Created: 2025-10-25T12:38:27Z
+  - Updated: 2025-10-25T12:38:43Z
+
+- **#33666** feat: Add Serpex partner package for web search
+  - State: open
+  - Created: 2025-10-25T03:38:09Z
+  - Updated: 2025-10-25T05:33:48Z
+
+- **#33663** feat: support structured output retry middleware
+  - State: open
+  - Created: 2025-10-24T16:22:11Z
+  - Updated: 2025-10-24T17:57:10Z
+
+- **#33662** fix(openai): Improve vLLM API compatibility and error messages
+  - State: open
+  - Created: 2025-10-24T15:13:18Z
+  - Updated: 2025-10-24T15:20:30Z
+
+- **#33640** chore(langchain_v1): Updated Signature for create_agent for system prompt
+  - State: open
+  - Created: 2025-10-22T19:50:38Z
+  - Updated: 2025-10-25T11:17:55Z
+
+- **#33479** fix(core): Fix tool name check in name_dict for PydanticToolsParser
+  - State: open
+  - Created: 2025-10-14T16:10:19Z
+  - Updated: 2025-10-25T11:20:40Z",报告大小：4.12 KB,,,2025-10-26 18:21:24.663545
+langchain-ai/langchain,2,查看历史报告,,"# langchain-ai/langchain - 项目进展总结（2025-10-24 ~ 2025-10-26）
+
+## 概述
+
+在2025年10月24日至10月26日期间，langchain项目展现了活跃的开发态势，核心进展集中在代码重构优化、新功能开发以及问题修复三大领域。项目团队持续推进核心模块的性能提升和代码质量改进，同时扩展了对多个AI服务提供商（包括OpenAI、Anthropic、Perplexity等）的集成支持，并解决了多个关键的技术兼容性和功能完善问题。
+
+## Issues 更新
+
+### 新增功能需求
+- **#33672** - 支持Qwen3推理过程读取功能（类似DeepSeek集成）
+- **#33670** - 为Perplexity推理模型输出创建专用解析器
+- **#33666** - 添加Serpex合作伙伴包用于网络搜索
+- **#33663** - 支持结构化输出重试中间件
+
+### 问题修复
+- **#33668** - 修复OpenAI嵌入API请求的30万token限制问题
+- **#33662** - 改进vLLM API兼容性和错误消息
+- **#33656** - 解决summarizationMiddleware导致Gemini消息顺序问题
+- **#33651** - 修复LLMToolSelectorMiddleware工具列表选择错误
+- **#33630** - 解决create_agent()系统提示不支持Anthropic API数组格式问题
+
+### 代码重构与优化
+- **#33674** - 核心模块代码可读性重构
+- **#33673** - 核心模块性能和代码简洁性改进
+- **#33671** - Anthropic模块代码可读性和简洁性优化
+
+### 架构改进
+- **#33653** - LangChain v1递归限制回退内置中间件
+- **#33640** - 更新create_agent系统提示签名
+
+## Pull Requests 更新
+
+### 代码质量提升
+- **#33674** - 核心模块代码可读性重构
+- **#33673** - 核心模块性能和代码简洁性改进
+- **#33671** - Anthropic模块代码可读性和简洁性优化
+
+### 功能增强
+- **#33670** - 为Perplexity推理模型输出创建专用解析器
+- **#33666** - 添加Serpex合作伙伴包用于网络搜索
+- **#33663** - 支持结构化输出重试中间件
+
+### 问题修复
+- **#33668** - 修复OpenAI嵌入API请求的token限制问题
+- **#33662** - 改进vLLM API兼容性和错误消息
+- **#33479** - 修复PydanticToolsParser中工具名称检查问题
+
+### 架构调整
+- **#33640** - 更新create_agent系统提示签名
+
+## 总结
+
+项目整体健康度良好，展现出持续的技术迭代和功能扩展能力。开发团队在保持代码质量的同时，积极响应用户需求并完善对各AI服务提供商的支持。需要关注的是多个中间件相关问题的集中出现（#33656、#33653、#33651），建议对中间件架构进行系统性审查以确保稳定性。此外，对新兴AI模型（如Qwen3、Perplexity推理模型）的支持需求持续增长，需要保持技术前瞻性以维持项目竞争力。","报告大小：2.66 KB
+
+<a href=""data:text/markdown;base64,IyBsYW5nY2hhaW4tYWkvbGFuZ2NoYWluIC0g6aG555uu6L+b5bGV5oC757uT77yIMjAyNS0xMC0yNCB+IDIwMjUtMTAtMjbvvIkKCiMjIOamgui/sAoK5ZyoMjAyNeW5tDEw5pyIMjTml6Xoh7MxMOaciDI25pel5pyf6Ze077yMbGFuZ2NoYWlu6aG555uu5bGV546w5LqG5rS76LeD55qE5byA5Y+R5oCB5Yq/77yM5qC45b+D6L+b5bGV6ZuG5Lit5Zyo5Luj56CB6YeN5p6E5LyY5YyW44CB5paw5Yqf6IO95byA5Y+R5Lul5Y+K6Zeu6aKY5L+u5aSN5LiJ5aSn6aKG5Z+f44CC6aG555uu5Zui6Zif5oyB57ut5o6o6L+b5qC45b+D5qih5Z2X55qE5oCn6IO95o+Q5Y2H5ZKM5Luj56CB6LSo6YeP5pS56L+b77yM5ZCM5pe25omp5bGV5LqG5a+55aSa5LiqQUnmnI3liqHmj5DkvpvllYbvvIjljIXmi6xPcGVuQUnjgIFBbnRocm9waWPjgIFQZXJwbGV4aXR5562J77yJ55qE6ZuG5oiQ5pSv5oyB77yM5bm26Kej5Yaz5LqG5aSa5Liq5YWz6ZSu55qE5oqA5pyv5YW85a655oCn5ZKM5Yqf6IO95a6M5ZaE6Zeu6aKY44CCCgojIyBJc3N1ZXMg5pu05pawCgojIyMg5paw5aKe5Yqf6IO96ZyA5rGCCi0gKiojMzM2NzIqKiAtIOaUr+aMgVF3ZW4z5o6o55CG6L+H56iL6K+75Y+W5Yqf6IO977yI57G75Ly8RGVlcFNlZWvpm4bmiJDvvIkKLSAqKiMzMzY3MCoqIC0g5Li6UGVycGxleGl0eeaOqOeQhuaooeWei+i+k+WHuuWIm+W7uuS4k+eUqOino+aekOWZqAotICoqIzMzNjY2KiogLSDmt7vliqBTZXJwZXjlkIjkvZzkvJnkvLTljIXnlKjkuo7nvZHnu5zmkJzntKIKLSAqKiMzMzY2MyoqIC0g5pSv5oyB57uT5p6E5YyW6L6T5Ye66YeN6K+V5Lit6Ze05Lu2CgojIyMg6Zeu6aKY5L+u5aSNCi0gKiojMzM2NjgqKiAtIOS/ruWkjU9wZW5BSeW1jOWFpUFQSeivt+axgueahDMw5LiHdG9rZW7pmZDliLbpl67popgKLSAqKiMzMzY2MioqIC0g5pS56L+bdkxMTSBBUEnlhbzlrrnmgKflkozplJnor6/mtojmga8KLSAqKiMzMzY1NioqIC0g6Kej5Yazc3VtbWFyaXphdGlvbk1pZGRsZXdhcmXlr7zoh7RHZW1pbmnmtojmga/pobrluo/pl67popgKLSAqKiMzMzY1MSoqIC0g5L+u5aSNTExNVG9vbFNlbGVjdG9yTWlkZGxld2FyZeW3peWFt+WIl+ihqOmAieaLqemUmeivrwotICoqIzMzNjMwKiogLSDop6PlhrNjcmVhdGVfYWdlbnQoKeezu+e7n+aPkOekuuS4jeaUr+aMgUFudGhyb3BpYyBBUEnmlbDnu4TmoLzlvI/pl67popgKCiMjIyDku6PnoIHph43mnoTkuI7kvJjljJYKLSAqKiMzMzY3NCoqIC0g5qC45b+D5qih5Z2X5Luj56CB5Y+v6K+75oCn6YeN5p6ECi0gKiojMzM2NzMqKiAtIOaguOW/g+aooeWdl+aAp+iDveWSjOS7o+eggeeugOa0geaAp+aUuei/mwotICoqIzMzNjcxKiogLSBBbnRocm9waWPmqKHlnZfku6PnoIHlj6/or7vmgKflkoznroDmtIHmgKfkvJjljJYKCiMjIyDmnrbmnoTmlLnov5sKLSAqKiMzMzY1MyoqIC0gTGFuZ0NoYWluIHYx6YCS5b2S6ZmQ5Yi25Zue6YCA5YaF572u5Lit6Ze05Lu2Ci0gKiojMzM2NDAqKiAtIOabtOaWsGNyZWF0ZV9hZ2VudOezu+e7n+aPkOekuuetvuWQjQoKIyMgUHVsbCBSZXF1ZXN0cyDmm7TmlrAKCiMjIyDku6PnoIHotKjph4/mj5DljYcKLSAqKiMzMzY3NCoqIC0g5qC45b+D5qih5Z2X5Luj56CB5Y+v6K+75oCn6YeN5p6ECi0gKiojMzM2NzMqKiAtIOaguOW/g+aooeWdl+aAp+iDveWSjOS7o+eggeeugOa0geaAp+aUuei/mwotICoqIzMzNjcxKiogLSBBbnRocm9waWPmqKHlnZfku6PnoIHlj6/or7vmgKflkoznroDmtIHmgKfkvJjljJYKCiMjIyDlip/og73lop7lvLoKLSAqKiMzMzY3MCoqIC0g5Li6UGVycGxleGl0eeaOqOeQhuaooeWei+i+k+WHuuWIm+W7uuS4k+eUqOino+aekOWZqAotICoqIzMzNjY2KiogLSDmt7vliqBTZXJwZXjlkIjkvZzkvJnkvLTljIXnlKjkuo7nvZHnu5zmkJzntKIKLSAqKiMzMzY2MyoqIC0g5pSv5oyB57uT5p6E5YyW6L6T5Ye66YeN6K+V5Lit6Ze05Lu2CgojIyMg6Zeu6aKY5L+u5aSNCi0gKiojMzM2NjgqKiAtIOS/ruWkjU9wZW5BSeW1jOWFpUFQSeivt+axgueahHRva2Vu6ZmQ5Yi26Zeu6aKYCi0gKiojMzM2NjIqKiAtIOaUuei/m3ZMTE0gQVBJ5YW85a655oCn5ZKM6ZSZ6K+v5raI5oGvCi0gKiojMzM0NzkqKiAtIOS/ruWkjVB5ZGFudGljVG9vbHNQYXJzZXLkuK3lt6XlhbflkI3np7Dmo4Dmn6Xpl67popgKCiMjIyDmnrbmnoTosIPmlbQKLSAqKiMzMzY0MCoqIC0g5pu05pawY3JlYXRlX2FnZW5057O757uf5o+Q56S6562+5ZCNCgojIyDmgLvnu5MKCumhueebruaVtOS9k+WBpeW6t+W6puiJr+Wlve+8jOWxleeOsOWHuuaMgee7reeahOaKgOacr+i/reS7o+WSjOWKn+iDveaJqeWxleiDveWKm+OAguW8gOWPkeWboumYn+WcqOS/neaMgeS7o+eggei0qOmHj+eahOWQjOaXtu+8jOenr+aegeWTjeW6lOeUqOaIt+mcgOaxguW5tuWujOWWhOWvueWQhEFJ5pyN5Yqh5o+Q5L6b5ZWG55qE5pSv5oyB44CC6ZyA6KaB5YWz5rOo55qE5piv5aSa5Liq5Lit6Ze05Lu255u45YWz6Zeu6aKY55qE6ZuG5Lit5Ye6546w77yIIzMzNjU244CBIzMzNjUz44CBIzMzNjUx77yJ77yM5bu66K6u5a+55Lit6Ze05Lu25p625p6E6L+b6KGM57O757uf5oCn5a6h5p+l5Lul56Gu5L+d56iz5a6a5oCn44CC5q2k5aSW77yM5a+55paw5YW0QUnmqKHlnovvvIjlpoJRd2VuM+OAgVBlcnBsZXhpdHnmjqjnkIbmqKHlnovvvInnmoTmlK/mjIHpnIDmsYLmjIHnu63lop7plb/vvIzpnIDopoHkv53mjIHmioDmnK/liY3nnrvmgKfku6Xnu7TmjIHpobnnm67nq57kuonlipvjgII="" download=""langchain-ai_langchain_daily_report_2025-10-24_to_2025-10-26.md"">下载报告：langchain-ai_langchain_daily_report_2025-10-24_to_2025-10-26.md</a>",,,2025-10-26 18:39:35.475514
+langchain-ai/langchain,2,查看历史报告,,"# langchain-ai/langchain - 项目进展总结（2025-10-24 ~ 2025-10-26）
+
+## 概述
+
+在2025年10月24日至10月26日期间，langchain项目展现了活跃的开发态势，核心进展集中在代码重构优化、新功能开发以及问题修复三大领域。项目团队持续推进核心模块的性能提升和代码质量改进，同时扩展了对多个AI服务提供商（包括OpenAI、Anthropic、Perplexity等）的集成支持，并解决了多个关键的技术兼容性和功能完善问题。
+
+## Issues 更新
+
+### 新增功能需求
+- **#33672** - 支持Qwen3推理过程读取功能（类似DeepSeek集成）
+- **#33670** - 为Perplexity推理模型输出创建专用解析器
+- **#33666** - 添加Serpex合作伙伴包用于网络搜索
+- **#33663** - 支持结构化输出重试中间件
+
+### 问题修复
+- **#33668** - 修复OpenAI嵌入API请求的30万token限制问题
+- **#33662** - 改进vLLM API兼容性和错误消息
+- **#33656** - 解决summarizationMiddleware导致Gemini消息顺序问题
+- **#33651** - 修复LLMToolSelectorMiddleware工具列表选择错误
+- **#33630** - 解决create_agent()系统提示不支持Anthropic API数组格式问题
+
+### 代码重构与优化
+- **#33674** - 核心模块代码可读性重构
+- **#33673** - 核心模块性能和代码简洁性改进
+- **#33671** - Anthropic模块代码可读性和简洁性优化
+
+### 架构改进
+- **#33653** - LangChain v1递归限制回退内置中间件
+- **#33640** - 更新create_agent系统提示签名
+
+## Pull Requests 更新
+
+### 代码质量提升
+- **#33674** - 核心模块代码可读性重构
+- **#33673** - 核心模块性能和代码简洁性改进
+- **#33671** - Anthropic模块代码可读性和简洁性优化
+
+### 功能增强
+- **#33670** - 为Perplexity推理模型输出创建专用解析器
+- **#33666** - 添加Serpex合作伙伴包用于网络搜索
+- **#33663** - 支持结构化输出重试中间件
+
+### 问题修复
+- **#33668** - 修复OpenAI嵌入API请求的token限制问题
+- **#33662** - 改进vLLM API兼容性和错误消息
+- **#33479** - 修复PydanticToolsParser中工具名称检查问题
+
+### 架构调整
+- **#33640** - 更新create_agent系统提示签名
+
+## 总结
+
+项目整体健康度良好，展现出持续的技术迭代和功能扩展能力。开发团队在保持代码质量的同时，积极响应用户需求并完善对各AI服务提供商的支持。需要关注的是多个中间件相关问题的集中出现（#33656、#33653、#33651），建议对中间件架构进行系统性审查以确保稳定性。此外，对新兴AI模型（如Qwen3、Perplexity推理模型）的支持需求持续增长，需要保持技术前瞻性以维持项目竞争力。","报告大小：2.66 KB
+
+<a href=""data:text/markdown;base64,IyBsYW5nY2hhaW4tYWkvbGFuZ2NoYWluIC0g6aG555uu6L+b5bGV5oC757uT77yIMjAyNS0xMC0yNCB+IDIwMjUtMTAtMjbvvIkKCiMjIOamgui/sAoK5ZyoMjAyNeW5tDEw5pyIMjTml6Xoh7MxMOaciDI25pel5pyf6Ze077yMbGFuZ2NoYWlu6aG555uu5bGV546w5LqG5rS76LeD55qE5byA5Y+R5oCB5Yq/77yM5qC45b+D6L+b5bGV6ZuG5Lit5Zyo5Luj56CB6YeN5p6E5LyY5YyW44CB5paw5Yqf6IO95byA5Y+R5Lul5Y+K6Zeu6aKY5L+u5aSN5LiJ5aSn6aKG5Z+f44CC6aG555uu5Zui6Zif5oyB57ut5o6o6L+b5qC45b+D5qih5Z2X55qE5oCn6IO95o+Q5Y2H5ZKM5Luj56CB6LSo6YeP5pS56L+b77yM5ZCM5pe25omp5bGV5LqG5a+55aSa5LiqQUnmnI3liqHmj5DkvpvllYbvvIjljIXmi6xPcGVuQUnjgIFBbnRocm9waWPjgIFQZXJwbGV4aXR5562J77yJ55qE6ZuG5oiQ5pSv5oyB77yM5bm26Kej5Yaz5LqG5aSa5Liq5YWz6ZSu55qE5oqA5pyv5YW85a655oCn5ZKM5Yqf6IO95a6M5ZaE6Zeu6aKY44CCCgojIyBJc3N1ZXMg5pu05pawCgojIyMg5paw5aKe5Yqf6IO96ZyA5rGCCi0gKiojMzM2NzIqKiAtIOaUr+aMgVF3ZW4z5o6o55CG6L+H56iL6K+75Y+W5Yqf6IO977yI57G75Ly8RGVlcFNlZWvpm4bmiJDvvIkKLSAqKiMzMzY3MCoqIC0g5Li6UGVycGxleGl0eeaOqOeQhuaooeWei+i+k+WHuuWIm+W7uuS4k+eUqOino+aekOWZqAotICoqIzMzNjY2KiogLSDmt7vliqBTZXJwZXjlkIjkvZzkvJnkvLTljIXnlKjkuo7nvZHnu5zmkJzntKIKLSAqKiMzMzY2MyoqIC0g5pSv5oyB57uT5p6E5YyW6L6T5Ye66YeN6K+V5Lit6Ze05Lu2CgojIyMg6Zeu6aKY5L+u5aSNCi0gKiojMzM2NjgqKiAtIOS/ruWkjU9wZW5BSeW1jOWFpUFQSeivt+axgueahDMw5LiHdG9rZW7pmZDliLbpl67popgKLSAqKiMzMzY2MioqIC0g5pS56L+bdkxMTSBBUEnlhbzlrrnmgKflkozplJnor6/mtojmga8KLSAqKiMzMzY1NioqIC0g6Kej5Yazc3VtbWFyaXphdGlvbk1pZGRsZXdhcmXlr7zoh7RHZW1pbmnmtojmga/pobrluo/pl67popgKLSAqKiMzMzY1MSoqIC0g5L+u5aSNTExNVG9vbFNlbGVjdG9yTWlkZGxld2FyZeW3peWFt+WIl+ihqOmAieaLqemUmeivrwotICoqIzMzNjMwKiogLSDop6PlhrNjcmVhdGVfYWdlbnQoKeezu+e7n+aPkOekuuS4jeaUr+aMgUFudGhyb3BpYyBBUEnmlbDnu4TmoLzlvI/pl67popgKCiMjIyDku6PnoIHph43mnoTkuI7kvJjljJYKLSAqKiMzMzY3NCoqIC0g5qC45b+D5qih5Z2X5Luj56CB5Y+v6K+75oCn6YeN5p6ECi0gKiojMzM2NzMqKiAtIOaguOW/g+aooeWdl+aAp+iDveWSjOS7o+eggeeugOa0geaAp+aUuei/mwotICoqIzMzNjcxKiogLSBBbnRocm9waWPmqKHlnZfku6PnoIHlj6/or7vmgKflkoznroDmtIHmgKfkvJjljJYKCiMjIyDmnrbmnoTmlLnov5sKLSAqKiMzMzY1MyoqIC0gTGFuZ0NoYWluIHYx6YCS5b2S6ZmQ5Yi25Zue6YCA5YaF572u5Lit6Ze05Lu2Ci0gKiojMzM2NDAqKiAtIOabtOaWsGNyZWF0ZV9hZ2VudOezu+e7n+aPkOekuuetvuWQjQoKIyMgUHVsbCBSZXF1ZXN0cyDmm7TmlrAKCiMjIyDku6PnoIHotKjph4/mj5DljYcKLSAqKiMzMzY3NCoqIC0g5qC45b+D5qih5Z2X5Luj56CB5Y+v6K+75oCn6YeN5p6ECi0gKiojMzM2NzMqKiAtIOaguOW/g+aooeWdl+aAp+iDveWSjOS7o+eggeeugOa0geaAp+aUuei/mwotICoqIzMzNjcxKiogLSBBbnRocm9waWPmqKHlnZfku6PnoIHlj6/or7vmgKflkoznroDmtIHmgKfkvJjljJYKCiMjIyDlip/og73lop7lvLoKLSAqKiMzMzY3MCoqIC0g5Li6UGVycGxleGl0eeaOqOeQhuaooeWei+i+k+WHuuWIm+W7uuS4k+eUqOino+aekOWZqAotICoqIzMzNjY2KiogLSDmt7vliqBTZXJwZXjlkIjkvZzkvJnkvLTljIXnlKjkuo7nvZHnu5zmkJzntKIKLSAqKiMzMzY2MyoqIC0g5pSv5oyB57uT5p6E5YyW6L6T5Ye66YeN6K+V5Lit6Ze05Lu2CgojIyMg6Zeu6aKY5L+u5aSNCi0gKiojMzM2NjgqKiAtIOS/ruWkjU9wZW5BSeW1jOWFpUFQSeivt+axgueahHRva2Vu6ZmQ5Yi26Zeu6aKYCi0gKiojMzM2NjIqKiAtIOaUuei/m3ZMTE0gQVBJ5YW85a655oCn5ZKM6ZSZ6K+v5raI5oGvCi0gKiojMzM0NzkqKiAtIOS/ruWkjVB5ZGFudGljVG9vbHNQYXJzZXLkuK3lt6XlhbflkI3np7Dmo4Dmn6Xpl67popgKCiMjIyDmnrbmnoTosIPmlbQKLSAqKiMzMzY0MCoqIC0g5pu05pawY3JlYXRlX2FnZW5057O757uf5o+Q56S6562+5ZCNCgojIyDmgLvnu5MKCumhueebruaVtOS9k+WBpeW6t+W6puiJr+Wlve+8jOWxleeOsOWHuuaMgee7reeahOaKgOacr+i/reS7o+WSjOWKn+iDveaJqeWxleiDveWKm+OAguW8gOWPkeWboumYn+WcqOS/neaMgeS7o+eggei0qOmHj+eahOWQjOaXtu+8jOenr+aegeWTjeW6lOeUqOaIt+mcgOaxguW5tuWujOWWhOWvueWQhEFJ5pyN5Yqh5o+Q5L6b5ZWG55qE5pSv5oyB44CC6ZyA6KaB5YWz5rOo55qE5piv5aSa5Liq5Lit6Ze05Lu255u45YWz6Zeu6aKY55qE6ZuG5Lit5Ye6546w77yIIzMzNjU244CBIzMzNjUz44CBIzMzNjUx77yJ77yM5bu66K6u5a+55Lit6Ze05Lu25p625p6E6L+b6KGM57O757uf5oCn5a6h5p+l5Lul56Gu5L+d56iz5a6a5oCn44CC5q2k5aSW77yM5a+55paw5YW0QUnmqKHlnovvvIjlpoJRd2VuM+OAgVBlcnBsZXhpdHnmjqjnkIbmqKHlnovvvInnmoTmlK/mjIHpnIDmsYLmjIHnu63lop7plb/vvIzpnIDopoHkv53mjIHmioDmnK/liY3nnrvmgKfku6Xnu7TmjIHpobnnm67nq57kuonlipvjgII="" download=""langchain-ai_langchain_daily_report_2025-10-24_to_2025-10-26.md"">下载报告：langchain-ai_langchain_daily_report_2025-10-24_to_2025-10-26.md</a>",,,2025-10-26 18:39:37.574840
+2025-10-26T19:12:34,,2,生成AI报告,,0
+2025-10-26T19:43:14,langchain-ai/langchain,1,生成AI报告,,1480

@@ -34,6 +34,10 @@ class Settings:
         LLM_TEMPERATURE = float(os.getenv("LLM_TEMPERATURE", "0.7"))
     except Exception:
         LLM_TEMPERATURE = 0.7
+    # 新增：LLM提供方（openai 兼容 / ollama）
+    LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai")
+    # Ollama 本地服务地址（仅在 provider=ollama 时使用）
+    OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 
     # 提示词模板文件路径（JSON），可覆盖
     PROMPTS_PATH = os.getenv("PROMPTS_PATH", os.path.join(os.path.dirname(__file__), "prompts.json"))
