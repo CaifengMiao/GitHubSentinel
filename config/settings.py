@@ -21,7 +21,21 @@ class Settings:
     # 数据库配置
     DATABASE_PATH = os.getenv("DATABASE_PATH", "github_sentinel.db")
     
-    # LLM 配置
+    # LLM 配置（抽取为可配置）
     DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+    LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://api.deepseek.com/v1")
+    LLM_MODEL = os.getenv("LLM_MODEL", "deepseek-chat")
+    LLM_SYSTEM_PROMPT = os.getenv("LLM_SYSTEM_PROMPT", "You are a helpful assistant.")
+    try:
+        LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "1500"))
+    except Exception:
+        LLM_MAX_TOKENS = 1500
+    try:
+        LLM_TEMPERATURE = float(os.getenv("LLM_TEMPERATURE", "0.7"))
+    except Exception:
+        LLM_TEMPERATURE = 0.7
+
+    # 提示词模板文件路径（JSON），可覆盖
+    PROMPTS_PATH = os.getenv("PROMPTS_PATH", os.path.join(os.path.dirname(__file__), "prompts.json"))
 
 settings = Settings()
