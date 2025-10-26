@@ -124,16 +124,24 @@ def export_progress_by_date_range(repo_full: str, days: int, mode: str, history_
 原始进展数据（Issues、Pull Requests 与 Commits 最近更新）：
 {progress_md}
 
-请生成结构化的总结报告，要求：
+请生成结构化且清晰的总结报告，要求：
 1. 报告标题：项目名称 - 项目进展总结（{start_date} ~ {end_date}）
-2. 概述：用一段话总结这段时间的核心进展与趋势。
+2. 概述：用一段话总结这段时间的核心进展与趋势（重要里程碑、发布、重构、稳定性提升）。
 3. Issues 更新：
-   - 分类列出新增和更新的 issues（简要描述与链接，如可用）
+   - 分类列出新增与更新（简要描述与链接，如可用）。
 4. Pull Requests 更新：
-   - 分类列出新增和更新的 PR（简要描述、作者与链接，如可用）
-5. 总结：对项目健康度进行评价，指出需要关注的问题或风险。
+   - 分类列出新增与更新（简要描述、作者与链接，如可用）。
+5. Commits 更新（重点提升清晰度）：
+   - 概览：给出提交数量与类型分布（feat/fix/docs/refactor/test/chore/build/ci/perf/style/revert/other）。
+   - 重要变更：挑选 3-5 条关键提交，标明类型、scope、主题与影响面。
+   - 重大变更：若存在 `!` 或备注包含 `BREAKING CHANGE`，需单独列出并说明可能风险与迁移建议。
+   - 关联 PR：根据文本中的 `#123` 汇总列出（如可用）。
+   - 详细列表：使用 `[type(scope)!] sha subject — author (date)` 的格式逐条列出，并保留链接。
+6. 总结：对项目健康度进行评价，指出需要关注的问题或风险，并给出下一步建议。
 
-注意：使用正式、专业的语言；突出关键信息；不要添加原始数据中没有的内容。
+注意：
+- 使用正式、专业的语言；突出关键信息；避免冗长；不要添加原始数据中没有的内容。
+- 结构清晰，便于快速浏览；各小节用简明要点呈现。
 """
         ai_report_md = llm_client.generate_report_with_deepseek(prompt)
 
